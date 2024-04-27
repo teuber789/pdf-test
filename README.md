@@ -9,6 +9,8 @@ Uncaught ReferenceError: require is not defined
 
 This error is being thrown because the minified `pdf.worker.js` file produced by the build references hardcoded files from the hard drive of the machine that produced the build, and naturally the paths are broken when serving them statically.
 
+> **Note:** This app is heavily based on the [create-react-app-5 sample provided by react-pdf](https://github.com/wojtekmaj/react-pdf/tree/main/sample/create-react-app-5).
+
 ### Steps to reproduce:
 
 **First, verify that the app works fine when doing local development:**
@@ -47,7 +49,9 @@ Obviously, this is referencing the node_modules directory that is used for devel
 
 ### What I have already tried
 
-I have thoroughly exhausted all of the suggestions on https://github.com/wojtekmaj/react-pdf/issues/782. None of them worked.
+* I have thoroughly exhausted all of the suggestions on https://github.com/wojtekmaj/react-pdf/issues/782. None of them worked.
+* I have thoroughly examined the [react-pdf readme](https://github.com/wojtekmaj/react-pdf/blob/main/README.md).
+* I have recreated all the necessary pieces from the [create-react-app-5 sample provided by react-pdf](https://github.com/wojtekmaj/react-pdf/tree/main/sample/create-react-app-5).
 
 ### Additional Info
 
