@@ -9,7 +9,7 @@ import axios from 'axios';
 // import { http } from '../../../../helpers';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-    'pdfjs-dist/build/pdf.worker.min.js',
+    'pdfjs-dist/build/pdf.worker.js',
     import.meta.url,
 ).toString();
 

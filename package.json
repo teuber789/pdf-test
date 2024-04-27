@@ -10,8 +10,12 @@
     "react-scripts": "5.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "npm run copy && react-scripts start",
+    "build": "npm run copy && react-scripts build",
+    "copy": "npm run copy-cmaps && npm run copy-standard-fonts && npm run copy-worker",
+    "copy-cmaps": "node ./scripts/copy-cmaps.mjs",
+    "copy-standard-fonts": "node ./scripts/copy-standard-fonts.mjs",
+    "copy-worker": "node ./scripts/copy-worker.mjs",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

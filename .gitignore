@@ -11,6 +11,11 @@
 # production
 /build
 
+# react-pdf assets
+public/cmaps
+public/standard_fonts
+public/pdf.worker.js
+
 # misc
 .DS_Store
 .env.local
