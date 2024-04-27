@@ -1,70 +1,59 @@
-# Getting Started with Create React App
+# PDF Test
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This repository showcases a problem building a React App with an embedded React PDF Document component. In short, the PDF displays without any issues when running for local development, but doesn't display after the app has been build for production. It fails with the following error:
 
-## Available Scripts
+```
+Uncaught ReferenceError: require is not defined
+    at pdf.worker.min.347589700aee6bfb7b8a.js:1:21
+```
 
-In the project directory, you can run:
+This error is being thrown because the minified `pdf.worker.min.js` file produced by the build references hardcoded files from the hard drive of the machine that produced the build, and naturally the paths are broken when serving them statically.
 
-### `npm start`
+### Steps to reproduce:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+**First, verify that the app works fine when doing local development:**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+* Make sure you are running Node 17.7.1
+* Open a terminal
+* Clone this repository
+* `cd pdf-test`
+* Run the app locally: `npm i && npm start`
+* Go to `http://localhost:3000` in your browser
+* You should see the PDF document render correctly (it will say "This is a test PDF document")
+* Go back to your terminal and stop the npm process
 
-### `npm test`
+**Run the production build and see the failed error:**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* Run the production build: `npm run build`
+* Switch into the build directory: `cd build/`
+* Serve the static files locally on port 3000: `python3 -m http.server 3000`
+* Go to `http://localhost:3000` in your browser
+* You will see an error saying that the PDF failed to load.
+* Open your browser console. You will see an error similar to the following: `pdf.worker.min.347589700aee6bfb7b8a.js:1 Uncaught ReferenceError: require is not defined
+    at pdf.worker.min.347589700aee6bfb7b8a.js:1:21`
+* Go back to your terminal and stop the Python process
 
-### `npm run build`
+**Examining the minified `pdf.worker.min.js` file:**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* In your favorite code editor, open the `build/static/media/pdf.worker.min.<hash>.js` file
+* Notice that all of the `require` statements reference absolute file paths from when they were built. For instance, in my minified JS file, I have require statements that look like this:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+// Note: my local computer account is "administrator"
+require("/Users/administrator/code/pdf-test/node_modules/@babel/runtime/helpers/defineProperty.js").default
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Obviously, this is referencing the node_modules directory that is used for development. Since this is a production build, I would expect that the requires reference a static asset within the production build itself, or would be packed into the minified JS file.
 
-### `npm run eject`
+### What I have already tried
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+I have thoroughly exhausted all of the suggestions on https://github.com/wojtekmaj/react-pdf/issues/782. None of them worked.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Additional Info
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* Node 17.7.1
+* React 18.2.0
+* React-PDF 7.7.1
+* Python 3.12.3
+* Chrome Version 124.0.6367.92 (Official Build) (x86_64)
+* MacOS 14.4.1 (intel)
