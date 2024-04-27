@@ -1,0 +1,68 @@
+.spinner {
+  position: relative;
+  display: inline-block;
+  margin-left: 10px;
+  margin-top: -5px;
+  margin-bottom: -2px;
+  border-radius: 50%;
+  -webkit-animation: spCircRot .6s infinite linear;
+  animation: spCircRot .6s infinite linear;
+
+  &.inline {
+    width: 13px;
+    height: 13px;
+    border: 2px rgba(255,255,255,.25) solid;
+    border-top: 2px rgba(255,255,255,1) solid;
+  }
+
+  &.inline-bigger {
+    width: 17px;
+    height: 17px;
+    border: 3px rgba(102, 102, 102, .25) solid;
+    border-top: 3px rgba(102, 102, 102, 1) solid;
+  }
+
+
+  &.page {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    border: 3px rgba(102, 102, 102, .25) solid;
+    border-top: 3px rgba(102, 102, 102, 1) solid;
+  }
+
+  &.center {
+    position: absolute;
+    margin-left: 0 !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    border: 3px rgba(102, 102, 102, .25) solid;
+    border-top: 3px rgba(102, 102, 102, 1) solid;
+  }
+
+  &.parent-center {
+    margin-left: 0 !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    border: 3px rgba(102, 102, 102, .25) solid;
+    border-top: 3px rgba(102, 102, 102, 1) solid;
+  }
+}
+
+@-webkit-keyframes spCircRot {
+  from { -webkit-transform: rotate(0deg); }
+  to { -webkit-transform: rotate(359deg); }
+}
+@keyframes spCircRot {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(359deg); }
+}
