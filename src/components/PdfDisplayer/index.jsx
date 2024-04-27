@@ -6,7 +6,6 @@ import {
 } from 'react-pdf';
 import Spinner from '../Spinner';
 import axios from 'axios';
-// import { http } from '../../../../helpers';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     'pdfjs-dist/build/pdf.worker.js',
