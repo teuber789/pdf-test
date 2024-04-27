@@ -1,13 +1,13 @@
 # PDF Test
 
-This repository showcases a problem building a React App with an embedded React PDF Document component. In short, the PDF displays without any issues when running for local development, but doesn't display after the app has been build for production. It fails with the following error:
+This repository showcases a problem building a React App with an embedded React PDF Document component. In short, the PDF displays without any issues when running for local development, but doesn't display after the app has been built for production. It fails with the following error:
 
 ```
 Uncaught ReferenceError: require is not defined
     at pdf.worker.min.347589700aee6bfb7b8a.js:1:21
 ```
 
-This error is being thrown because the minified `pdf.worker.min.js` file produced by the build references hardcoded files from the hard drive of the machine that produced the build, and naturally the paths are broken when serving them statically.
+This error is being thrown because the minified `pdf.worker.js` file produced by the build references hardcoded files from the hard drive of the machine that produced the build, and naturally the paths are broken when serving them statically.
 
 ### Steps to reproduce:
 
